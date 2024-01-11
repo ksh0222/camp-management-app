@@ -39,4 +39,8 @@ public class Score {
     public int getScoreValue() {
         return scoreValue;
     }
+
+    public void setScoreValue(int newScore) {
+        this.scoreValue = newScore;
+    }
 }
