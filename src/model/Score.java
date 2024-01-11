@@ -4,8 +4,8 @@ public class Score {
     private String scoreId;
     private String studentId;
     private Subject subject;
-    private int round;
-    private int scoreValue;
+    private int round; // 회차
+    private int scoreValue; // 점수
 
     public Score(String scoreId, String studentId, Subject subject, int round, int scoreValue) {
         this.scoreId = scoreId;
