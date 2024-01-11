@@ -181,25 +181,63 @@ public class CampManagementApplication {
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
+        Student student = new Student(); // 수강생 인스턴스 생성 예시 코드
+        student.setStudentId(sequence(INDEX_TYPE_STUDENT));
+        student.setStudentName(studentName);
         System.out.println("\n[ 필수 과목 ]");
         for (int i = 0; i < subjectStore.size(); i++) {
             if (subjectStore.get(i).getSubjectType().equals("MANDATORY")) {
-                System.out.println(subjectStore.get(i).getSubjectName());
+                System.out.println("과목명: "+subjectStore.get(i).getSubjectName() +" | 과목코드: "+ subjectStore.get(i).getSubjectId());
             }
         }
 
         System.out.println("\n[ 선택 과목 ]");
         for (int i = 0; i < subjectStore.size(); i++) {
             if (subjectStore.get(i).getSubjectType().equals("CHOICE")) {
-                System.out.println(subjectStore.get(i).getSubjectName());
+                System.out.println("과목명: " + subjectStore.get(i).getSubjectName()+" | 과목코드: "+subjectStore.get(i).getSubjectId());
             }
         }
 
-        Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
+        List<Subject> mandatorySubjects;
+        do {
+            System.out.print("필수 과목 입력(','로 구분) *주의: 3개이상 입력: ");
+            sc.nextLine();
+            mandatorySubjects = subjectinput();
+        } while (mandatorySubjects.size()<3);
+
+        List<Subject> choiceSubjects;
+        do{
+            System.out.print("선택 과목 입력(','로 구분) *주의: 2개이상 입력: ");
+            choiceSubjects = subjectinput();
+        } while (choiceSubjects.size()<2);
+
+        student.setSelectedmandatoryList(mandatorySubjects);
+        student.setSelectedchoiceList(choiceSubjects);
+
+        for(Subject c : student.getSelectedmandatoryList()){
+            System.out.println(c.getSubjectName());
+        }
+        for(Subject c : student.getSelectedchoiceList()){
+            System.out.println(c.getSubjectName());
+        }
         // 기능 구현
         System.out.println("수강생 등록 성공!\n");
+        studentStore.add(student);
     }
+    private static List<Subject> subjectinput(){
+        String input = sc.next();
+        String[] values = input.split(",");
 
+        List<Subject> temp = new ArrayList<>();
+        for(int i = 0; i < values.length; i++){
+            for(int j = 0; j<subjectStore.size(); j++){
+                if(values[i].equals(subjectStore.get(j).getSubjectId())){
+                    temp.add(subjectStore.get(j));
+                }
+            }
+        }
+        return temp;
+    }
     // 수강생 목록 조회
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
