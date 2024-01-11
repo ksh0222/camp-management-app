@@ -100,18 +100,15 @@ public class CampManagementApplication {
     // index 자동 증가
     private static String sequence(String type) {
         switch (type) {
-            case INDEX_TYPE_STUDENT -> {
+            case INDEX_TYPE_STUDENT:
                 studentIndex++;
                 return INDEX_TYPE_STUDENT + studentIndex;
-            }
-            case INDEX_TYPE_SUBJECT -> {
+            case INDEX_TYPE_SUBJECT:
                 subjectIndex++;
                 return INDEX_TYPE_SUBJECT + subjectIndex;
-            }
-            default -> {
+            default:
                 scoreIndex++;
                 return INDEX_TYPE_SCORE + scoreIndex;
-            }
         }
     }
 
@@ -127,14 +124,24 @@ public class CampManagementApplication {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> displayStudentView(); // 수강생 관리
-                case 2 -> displayScoreView(); // 점수 관리
-                case 3 -> flag = false; // 프로그램 종료
-                default -> {
+                case 1:
+                    displayStudentView();
+                    break;
+                case 2:
+                    displayScoreView();
+                    break;
+                case 3:
+                    flag = false;
+                    break;
+                default:
                     System.out.println("잘못된 입력입니다.\n되돌아갑니다!");
-                    Thread.sleep(2000);
-                }
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
             }
+
         }
         System.out.println("프로그램을 종료합니다.");
     }
@@ -151,13 +158,19 @@ public class CampManagementApplication {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> createStudent(); // 수강생 등록
-                case 2 -> inquireStudent(); // 수강생 목록 조회
-                case 3 -> flag = false; // 메인 화면 이동
-                default -> {
+                case 1:
+                    createStudent();
+                    break;
+                case 2:
+                    inquireStudent();
+                    break;
+                case 3:
+                    flag = false;
+                    break;
+                default:
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
-                }
+                    break;
             }
         }
     }
@@ -198,15 +211,24 @@ public class CampManagementApplication {
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> createScore(); // 수강생의 과목별 시험 회차 및 점수 등록
-                case 2 -> updateRoundScoreBySubject(); // 수강생의 과목별 회차 점수 수정
-                case 3 -> inquireRoundGradeBySubject(); // 수강생의 특정 과목 회차별 등급 조회
-                case 4 -> flag = false; // 메인 화면 이동
-                default -> {
+                case 1:
+                    createScore();
+                    break;
+                case 2:
+                    updateRoundScoreBySubject();
+                    break;
+                case 3:
+                    inquireRoundGradeBySubject();
+                    break;
+                case 4:
+                    flag = false;
+                    break;
+                default:
                     System.out.println("잘못된 입력입니다.\n메인 화면 이동...");
                     flag = false;
-                }
+                    break;
             }
+
         }
     }
 
