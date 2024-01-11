@@ -1,6 +1,6 @@
-import camp.model.Score;
-import camp.model.Student;
-import camp.model.Subject;
+import model.Score;
+import model.Student;
+import model.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,6 +177,10 @@ public class CampManagementApplication {
     // 수강생 목록 조회
     private static void inquireStudent() {
         System.out.println("\n수강생 목록을 조회합니다...");
+        for(Student su : studentStore){
+            System.out.println("학생이름: "+ su.getStudentName() +"학생번호: " + su.getStudentId());
+
+        }
         // 기능 구현
         System.out.println("\n수강생 목록 조회 성공!");
     }
@@ -215,6 +219,34 @@ public class CampManagementApplication {
     private static void createScore() {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         System.out.println("시험 점수를 등록합니다...");
+        System.out.println("과목 목록:");
+        for (Subject subject : subjectStore) {
+            System.out.println(subject.getSubjectId() + ". " + subject.getSubjectName());
+        }
+
+        System.out.print("과목을 선택하세요: ");
+        String selectedSubjectId = sc.next();
+        Subject selectedSubject = null;
+        for (Subject subject : subjectStore) {
+            if (subject.getSubjectId().equals(selectedSubjectId)) {
+                selectedSubject = subject;
+                break;
+            }
+        }
+
+        if (selectedSubject == null) {
+            System.out.println("잘못된 과목 선택입니다.");
+            return;
+        }
+
+        System.out.print("시험 회차를 입력하세요: ");
+        int round = sc.nextInt();
+
+        System.out.print("시험 점수를 입력하세요: ");
+        int scoreValue = sc.nextInt();
+
+        Score score = new Score(sequence(INDEX_TYPE_SCORE), studentId, selectedSubject, round, scoreValue);
+        ScoreStore.add(score);
         // 기능 구현
         System.out.println("\n점수 등록 성공!");
     }
