@@ -16,9 +16,9 @@ import java.util.Scanner;
  */
 public class CampManagementApplication {
     // 데이터 저장소
-    private static List<Student> studentStore;
-    private static List<Subject> subjectStore;
-    private static List<Score> ScoreStore;
+    private static List<Student> studentStore; // 고유 번호, 이름, 과목 목록, 점수 목록
+    private static List<Subject> subjectStore; // 고유 번호, 과목명, 과목타입(필수, 선택)
+    private static List<Score> scoreStore; // 과목 고유 번호, 수강생 고유 번호, 회차, 점수, 등급
 
     // 과목 타입
     private static String SUBJECT_TYPE_MANDATORY = "MANDATORY";
@@ -94,7 +94,7 @@ public class CampManagementApplication {
                         SUBJECT_TYPE_CHOICE
                 )
         );
-        ScoreStore = new ArrayList<>();
+        scoreStore = new ArrayList<>();
     }
 
     // index 자동 증가
@@ -181,6 +181,19 @@ public class CampManagementApplication {
         System.out.print("수강생 이름 입력: ");
         String studentName = sc.next();
         // 기능 구현 (필수 과목, 선택 과목)
+        System.out.println("\n[ 필수 과목 ]");
+        for (int i = 0; i < subjectStore.size(); i++) {
+            if (subjectStore.get(i).getSubjectType().equals("MANDATORY")) {
+                System.out.println(subjectStore.get(i).getSubjectName());
+            }
+        }
+
+        System.out.println("\n[ 선택 과목 ]");
+        for (int i = 0; i < subjectStore.size(); i++) {
+            if (subjectStore.get(i).getSubjectType().equals("CHOICE")) {
+                System.out.println(subjectStore.get(i).getSubjectName());
+            }
+        }
 
         Student student = new Student(sequence(INDEX_TYPE_STUDENT), studentName); // 수강생 인스턴스 생성 예시 코드
         // 기능 구현
@@ -268,7 +281,7 @@ public class CampManagementApplication {
         int scoreValue = sc.nextInt();
 
         Score score = new Score(sequence(INDEX_TYPE_SCORE), studentId, selectedSubject, round, scoreValue);
-        ScoreStore.add(score);
+        scoreStore.add(score);
         // 기능 구현
         System.out.println("\n점수 등록 성공!");
     }
