@@ -312,15 +312,35 @@ public class CampManagementApplication {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         System.out.println("시험 점수를 등록합니다...");
         System.out.println("과목 목록:");
-        for (Subject subject : subjectStore) {
-            System.out.println(subject.getSubjectId() + ". " + subject.getSubjectName());
+
+        for (Student student : studentStore){
+            if(studentId.equals(student.getStudentId())){
+                System.out.println("- " + student.getStudentName() + " 학생의 과목 -");
+                System.out.println("[필수과목]");
+                for(Subject subject:student.getSelectedmandatoryList()){
+                    System.out.println("과목 이름: "+ subject.getSubjectName() + " | 과목 코드: " + subject.getSubjectId());
+                }
+                System.out.println("[선택과목]");
+                for(Subject subject:student.getSelectedchoiceList()){
+                    System.out.println("과목 이름: "+ subject.getSubjectName() + " | 과목 코드: " + subject.getSubjectId());
+                }
+            }
+        }
+
+        Student selectedStudent = null;
+        for (Student storedStudent : studentStore) {
+            if (storedStudent.getStudentId().equals(studentId)) {
+                selectedStudent = storedStudent;
+                break;
+            }
         }
 
         System.out.print("과목을 선택하세요: ");
         String selectedSubjectId = sc.next();
         Subject selectedSubject = null;
         for (Subject subject : subjectStore) {
-            if (subject.getSubjectId().equals(selectedSubjectId)) {
+            if (subject.getSubjectId().equals(selectedSubjectId) &&
+                    (selectedStudent.getSelectedmandatoryList().contains(subject) || selectedStudent.getSelectedchoiceList().contains(subject))){
                 selectedSubject = subject;
                 break;
             }
@@ -348,9 +368,32 @@ public class CampManagementApplication {
         String studentId = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (수정할 과목 및 회차, 점수)
 
-        System.out.println("과목 목록:");
-        for (Subject subject : subjectStore) {
-            System.out.println(subject.getSubjectId() + ". " + subject.getSubjectName());
+        Student selectedStudent = null;
+        for (Student storedStudent : studentStore) {
+            if (storedStudent.getStudentId().equals(studentId)) {
+                selectedStudent = storedStudent;
+                break;
+            }
+        }
+
+        if (selectedStudent == null) {
+            System.out.println("없는 학생입니다.");
+            return;
+        }
+
+
+        for (Student student : studentStore){
+            if(studentId.equals(student.getStudentId())){
+                System.out.println("- " + student.getStudentName() + " 학생의 과목 -");
+                System.out.println("[필수과목]");
+                for(Subject subject:student.getSelectedmandatoryList()){
+                    System.out.println("과목 이름: "+ subject.getSubjectName() + " | 과목 코드: " + subject.getSubjectId());
+                }
+                System.out.println("[선택과목]");
+                for(Subject subject:student.getSelectedchoiceList()){
+                    System.out.println("과목 이름: "+ subject.getSubjectName() + " | 과목 코드: " + subject.getSubjectId());
+                }
+            }
         }
 
         System.out.print("조회할 과목: ");
@@ -367,7 +410,9 @@ public class CampManagementApplication {
         int round = sc.nextInt();
 
         for (Score score : scoreStore) {
-            if (score.getRound() == round) {
+            if (score.getStudentId().equals(studentId)
+                    && score.getSubject().equals(selectedSubject)
+                    && score.getRound() == round) {
                 System.out.println("점수: " + score.getScoreValue());
                 System.out.println("시험 점수를 수정합니다...");
                 System.out.print("점수를 입력하세요: ");
