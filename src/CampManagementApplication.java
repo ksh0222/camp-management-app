@@ -217,12 +217,12 @@ public class CampManagementApplication {
         System.out.println("- 선택된 과목 -");
         System.out.print("[필수 과목] ");
         for(Subject c : student.getSelectedmandatoryList()){
-            System.out.print(c.getSubjectName() + " ");
+            System.out.print(c.getSubjectName() + ", ");
         }
         System.out.println();
         System.out.print("[선택된 과목] ");
         for(Subject c : student.getSelectedchoiceList()){
-            System.out.print(c.getSubjectName() + " ");
+            System.out.print(c.getSubjectName() + ", ");
         }
         System.out.println();
         // 기능 구현
@@ -424,7 +424,7 @@ public class CampManagementApplication {
         System.out.println(selectedStudent + " 수강생의 "+selectedSubject+" 과목의 회차별 점수를 조회합니다...");
         for (int i = 0; i < scoreStore.size(); i++){
             if(studentId_inquire.equals(scoreStore.get(i).getStudentId()) && subjectId_inquire.equals(scoreStore.get(i).getSubject().getSubjectId())){
-                System.out.println(scoreStore.get(i).getSubject().getSubjectName() +" 과목의 "+ scoreStore.get(i).getRound() + "회차 점수: " + scoreStore.get(i).getScoreValue());
+                System.out.println(scoreStore.get(i).getSubject().getSubjectName() +" 과목의 "+ scoreStore.get(i).getRound() + "회차 점수: " + scoreStore.get(i).getScoreValue() + " / 등급: " + scoreStore.get(i).getGrade());
             }
         }
         System.out.println("\n등급 조회 성공!");

@@ -43,4 +43,38 @@ public class Score {
     public void setScoreValue(int newScore) {
         this.scoreValue = newScore;
     }
+
+    public String getGrade() {
+        if (subject.getSubjectType().equals("MANDATORY")) {
+            if (scoreValue >= 95 && scoreValue <= 100) {
+                return "A";
+            } else if (scoreValue >= 90 && scoreValue <= 94) {
+                return "B";
+            } else if (scoreValue >= 80 && scoreValue <= 89) {
+                return "C";
+            } else if (scoreValue >= 70 && scoreValue <= 79) {
+                return "D";
+            } else if (scoreValue >= 60 && scoreValue <= 69) {
+                return "F";
+            } else {
+                return "N";
+            }
+        } else if (subject.getSubjectType().equals("CHOICE")) {
+            if (scoreValue >= 90 && scoreValue <= 100) {
+                return "A";
+            } else if (scoreValue >= 80 && scoreValue <= 89) {
+                return "B";
+            } else if (scoreValue >= 70 && scoreValue <= 79) {
+                return "C";
+            } else if (scoreValue >= 60 && scoreValue <= 69) {
+                return "D";
+            } else if (scoreValue >= 50 && scoreValue <= 59) {
+                return "F";
+            } else {
+                return "N";
+            }
+        } else {
+            return "잘못된 명령입니다.";
+        }
+    }
 }
