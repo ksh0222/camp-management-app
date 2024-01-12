@@ -2,6 +2,7 @@ import model.Score;
 import model.Student;
 import model.Subject;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -200,26 +201,31 @@ public class CampManagementApplication {
 
         List<Subject> mandatorySubjects;
         do {
-            System.out.print("필수 과목 입력(','로 구분) *주의: 3개이상 입력: ");
+            System.out.print("필수 과목 입력(','로 구분, 과목 코드로 입력) *주의: 3개이상 입력: ");
             sc.nextLine();
             mandatorySubjects = subjectinput();
         } while (mandatorySubjects.size()<3);
 
         List<Subject> choiceSubjects;
         do{
-            System.out.print("선택 과목 입력(','로 구분) *주의: 2개이상 입력: ");
+            System.out.print("선택 과목 입력(','로 구분, 과목 코드로 입력) *주의: 2개이상 입력: ");
             choiceSubjects = subjectinput();
         } while (choiceSubjects.size()<2);
 
         student.setSelectedmandatoryList(mandatorySubjects);
         student.setSelectedchoiceList(choiceSubjects);
 
+        System.out.println("- 선택된 과목 -");
+        System.out.print("[필수 과목] ");
         for(Subject c : student.getSelectedmandatoryList()){
-            System.out.println(c.getSubjectName());
+            System.out.print(c.getSubjectName() + " ");
         }
+        System.out.println();
+        System.out.print("[선택된 과목] ");
         for(Subject c : student.getSelectedchoiceList()){
-            System.out.println(c.getSubjectName());
+            System.out.print(c.getSubjectName() + " ");
         }
+        System.out.println();
         // 기능 구현
         System.out.println("수강생 등록 성공!\n");
         studentStore.add(student);
@@ -381,11 +387,51 @@ public class CampManagementApplication {
 
     // 수강생의 특정 과목 회차별 등급 조회
     private static void inquireRoundGradeBySubject() {
-        String studentId = getStudentId(); // 관리할 수강생 고유 번호
+        System.out.println("- 현재 존재하는 수강생 -");
+        for(Student student: studentStore){
+            System.out.println(student.getStudentId() +" : " + student.getStudentName());
+        }
+        String studentId_inquire = getStudentId(); // 관리할 수강생 고유 번호
         // 기능 구현 (조회할 특정 과목)
-        System.out.println("회차별 등급을 조회합니다...");
+        for (Student student : studentStore){
+            if(studentId_inquire.equals(student.getStudentId())){
+                System.out.println("- " + student.getStudentName() + " 학생의 과목 -");
+                System.out.println("[필수과목]");
+                for(Subject subject:student.getSelectedmandatoryList()){
+                    System.out.println("과목 이름: "+ subject.getSubjectName() + " | 과목 코드: " + subject.getSubjectId());
+                }
+                System.out.println("[선택과목]");
+                for(Subject subject:student.getSelectedchoiceList()){
+                    System.out.println("과목 이름: "+ subject.getSubjectName() + " | 과목 코드: " + subject.getSubjectId());
+                }
+            }
+        }
+        String subjectId_inquire = getSubjectId();
+        //System.out.println("해당 과목의 회차별 등급을 조회합니다...");
         // 기능 구현
+        String selectedStudent = null;
+        for (Student student : studentStore){
+            if(studentId_inquire.equals(student.getStudentId())){
+                selectedStudent = student.getStudentName();
+            }
+        }
+        String selectedSubject = null;
+        for (Subject subject : subjectStore){
+            if(subjectId_inquire.equals(subject.getSubjectId())){
+                selectedSubject = subject.getSubjectName();
+            }
+        }
+        System.out.println(selectedStudent + " 수강생의 "+selectedSubject+" 과목의 회차별 점수를 조회합니다...");
+        for (int i = 0; i < scoreStore.size(); i++){
+            if(studentId_inquire.equals(scoreStore.get(i).getStudentId()) && subjectId_inquire.equals(scoreStore.get(i).getSubject().getSubjectId())){
+                System.out.println(scoreStore.get(i).getSubject().getSubjectName() +" 과목의 "+ scoreStore.get(i).getRound() + "회차 점수: " + scoreStore.get(i).getScoreValue());
+            }
+        }
         System.out.println("\n등급 조회 성공!");
+    }
+    private static String getSubjectId(){
+        System.out.print("\n조회할 과목의 번호를 입력하시오...");
+        return sc.next();
     }
 
 }
