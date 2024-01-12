@@ -2,7 +2,6 @@ import model.Score;
 import model.Student;
 import model.Subject;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -203,13 +202,13 @@ public class CampManagementApplication {
         do {
             System.out.print("필수 과목 입력(','로 구분, 과목 코드로 입력) *주의: 3개이상 입력: ");
             sc.nextLine();
-            mandatorySubjects = subjectinput();
+            mandatorySubjects = subjectinput("MANDATORY");
         } while (mandatorySubjects.size()<3);
 
         List<Subject> choiceSubjects;
         do{
             System.out.print("선택 과목 입력(','로 구분, 과목 코드로 입력) *주의: 2개이상 입력: ");
-            choiceSubjects = subjectinput();
+            choiceSubjects = subjectinput("CHOICE");
         } while (choiceSubjects.size()<2);
 
         student.setSelectedmandatoryList(mandatorySubjects);
@@ -230,14 +229,15 @@ public class CampManagementApplication {
         System.out.println("수강생 등록 성공!\n");
         studentStore.add(student);
     }
-    private static List<Subject> subjectinput(){
+    private static List<Subject> subjectinput(String subjectType){
         String input = sc.next();
         String[] values = input.split(",");
 
         List<Subject> temp = new ArrayList<>();
-        for(int i = 0; i < values.length; i++){
-            for(int j = 0; j<subjectStore.size(); j++){
-                if(values[i].equals(subjectStore.get(j).getSubjectId())){
+        for (int i = 0; i < values.length; i++) {
+            for (int j = 0; j < subjectStore.size(); j++) {
+                if (values[i].equals(subjectStore.get(j).getSubjectId())
+                        && subjectStore.get(j).getSubjectType().equals(subjectType)) {
                     temp.add(subjectStore.get(j));
                 }
             }
