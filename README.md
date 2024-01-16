@@ -3,7 +3,9 @@ Java를 이용한 수강생 관리 프로그램
 
 ## ⛺요구사항
 캠프에는 필수 과목과 선택 과목이 존재
+
 -필수과목(Java, 객체지향, Spring, JPA, MySQL)
+
 -선택과목(디자인 패턴, Spring Security, Redis, MongoDB)
 
 수강생들은 최소 3개 이상의 필수 과목과 2개 이상의 선택 과목 선택
