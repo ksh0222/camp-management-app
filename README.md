@@ -1,4 +1,4 @@
-#Java Project - 캠프 관리 프로그램
+# Java Project - 캠프 관리 프로그램
 Java를 이용한 수강생 관리 프로그램
 
 ##⛺요구사항
