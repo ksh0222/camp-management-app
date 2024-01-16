@@ -23,8 +23,13 @@ Java를 이용한 수강생 관리 프로그램
 ## 📌주요기능
 
 createStudent() - 수강생 등록
+
 inquireStudent() - 수강생 목록 조회
+
 createScore() - 수강생의 과목별 시험 회차 및 점수 등록
+
 updateRoundScoreBySubject() - 수강생의 과목별 회차 점수 수정
+
 inquireRoundGradeBySubject() - 수강생의 특정 과목 회차별 등급 조회
+
 
